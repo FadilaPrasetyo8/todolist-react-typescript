@@ -34,6 +34,14 @@ const Todolist: React.FC<IAppProps> = () => {
     setCheckedTasks(newCheckedTasks);
   };
 
+  const deleteInCompletedTask = (taskNameToDelete: string) => {
+    setCompleteTask(completeTask.filter((task) => task.taskList !== taskNameToDelete));
+    const taskIndex = completeTask.findIndex((task) => task.taskList === taskNameToDelete);
+    const newCheckedTasks = [...checkedTasks];
+    newCheckedTasks.splice(taskIndex, 1);
+    setCheckedTasks(newCheckedTasks);
+  };
+
   const completedTask = (id: string) => {
     const updatedTodos = todolist.map((todo) => {
       if (todo.id === id) {
@@ -53,13 +61,9 @@ const Todolist: React.FC<IAppProps> = () => {
     setCheckedTasks(checkedState);
   };
 
-  console.log(completeTask);
-  console.log(checkedTasks);
-  console.log(todolist);
-
   return (
     <>
-      <div className="flex justify-center items-center h-screen">
+      <div className="flex justify-center items-center h-screen gap-3">
         <div className="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 rounded overflow-hidden shadow-lg">
           <div className="px-6 py-4">
             <div className="font-bold text-xl mb-2 text-center">TODO LIST</div>
@@ -77,9 +81,7 @@ const Todolist: React.FC<IAppProps> = () => {
             ))}
           </div>
         </div>
-        <h1>Done</h1>
-
-        <CompletedList />
+        <CompletedList completeTask={completeTask} deleteInCompletedTask={deleteInCompletedTask} />
       </div>
     </>
   );

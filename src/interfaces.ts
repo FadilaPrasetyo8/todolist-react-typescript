@@ -4,4 +4,5 @@ export interface IAppProps {
   task: string;
   completeTask: string;
   completed: boolean;
+  deleteTask(taskNameToDelete: string): void;
 }
